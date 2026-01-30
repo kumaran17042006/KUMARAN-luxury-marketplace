@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Search, MapPin, User, ChevronRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, Search, MapPin, User, ChevronRight, LogOut } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Failed to logout', error);
+    }
+  };
 
   const navLinks = [
     { name: 'Models', href: '/models', hasDropdown: true },
@@ -22,26 +34,26 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <header 
+      <header
         className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm font-sans"
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="container mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
-          
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 z-50">
-             <span className="font-serif font-bold text-2xl tracking-tighter text-black uppercase">Kumaran</span>
+            <span className="font-serif font-bold text-2xl tracking-tighter text-black uppercase">Kumaran</span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-10 h-full">
             {navLinks.map((link) => (
-              <div 
-                key={link.name} 
+              <div
+                key={link.name}
                 className="h-full flex items-center relative"
                 onMouseEnter={() => link.hasDropdown && setActiveMenu('Models')}
               >
-                <Link 
+                <Link
                   to={link.href}
                   className="text-xs font-bold text-gray-800 hover:text-gray-500 transition-colors uppercase tracking-[0.15em] py-8 border-b-2 border-transparent hover:border-black"
                 >
@@ -54,15 +66,25 @@ const Navbar: React.FC = () => {
           {/* Right Utilities */}
           <div className="flex items-center gap-8 text-gray-800">
             <Link to="/ownership" className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors group">
-               <MapPin size={18} />
-               <span className="text-xs font-bold uppercase tracking-widest group-hover:underline">Find a Retailer</span>
+              <MapPin size={18} />
+              <span className="text-xs font-bold uppercase tracking-widest group-hover:underline">Find a Retailer</span>
             </Link>
             <button className="hidden lg:flex hover:text-gray-500 transition-colors">
-               <Search size={20} />
+              <Search size={20} />
             </button>
-            <button 
-                className="lg:hidden"
-                onClick={() => setIsMobileMenuOpen(true)}
+            {isAuthenticated ? (
+              <button onClick={handleLogout} className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors">
+                <LogOut size={20} />
+                <span className="text-xs font-bold uppercase tracking-widest">Logout</span>
+              </button>
+            ) : (
+              <Link to="/login" className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors">
+                <User size={20} />
+              </Link>
+            )}
+            <button
+              className="lg:hidden"
+              onClick={() => setIsMobileMenuOpen(true)}
             >
               <Menu size={24} />
             </button>
@@ -70,67 +92,73 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mega Menu - Models */}
-        <div 
-            className={`absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl transition-all duration-300 overflow-hidden ${activeMenu === 'Models' ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'}`}
-            onMouseEnter={() => setActiveMenu('Models')}
-            onMouseLeave={() => setActiveMenu(null)}
+        <div
+          className={`absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl transition-all duration-300 overflow-hidden ${activeMenu === 'Models' ? 'max-h-[500px] opacity-100 visible' : 'max-h-0 opacity-0 invisible'}`}
+          onMouseEnter={() => setActiveMenu('Models')}
+          onMouseLeave={() => setActiveMenu(null)}
         >
-            <div className="container mx-auto px-12 py-12">
-                <div className="grid grid-cols-4 gap-8">
-                    {models.map((model) => (
-                        <Link to="/models" key={model.name} className="group block text-center">
-                            <div className="overflow-hidden mb-4 relative aspect-[16/9]">
-                                <img 
-                                    src={model.image} 
-                                    alt={model.name} 
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" 
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-                            </div>
-                            <span className="font-serif text-xl text-gray-900 group-hover:text-gray-600 transition-colors block mb-2">{model.name}</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gray-800 flex justify-center items-center gap-1">
-                                Discover <ChevronRight size={10} />
-                            </span>
-                        </Link>
-                    ))}
-                </div>
-                <div className="mt-12 text-center border-t border-gray-100 pt-8">
-                     <Link to="/models" className="inline-block border border-gray-300 px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all">
-                        View All Models
-                     </Link>
-                </div>
+          <div className="container mx-auto px-12 py-12">
+            <div className="grid grid-cols-4 gap-8">
+              {models.map((model) => (
+                <Link to="/models" key={model.name} className="group block text-center">
+                  <div className="overflow-hidden mb-4 relative aspect-[16/9]">
+                    <img
+                      src={model.image}
+                      alt={model.name}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+                  </div>
+                  <span className="font-serif text-xl text-gray-900 group-hover:text-gray-600 transition-colors block mb-2">{model.name}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gray-800 flex justify-center items-center gap-1">
+                    Discover <ChevronRight size={10} />
+                  </span>
+                </Link>
+              ))}
             </div>
+            <div className="mt-12 text-center border-t border-gray-100 pt-8">
+              <Link to="/models" className="inline-block border border-gray-300 px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all">
+                View All Models
+              </Link>
+            </div>
+          </div>
         </div>
       </header>
 
       {/* Mobile Menu */}
       <div className={`fixed inset-0 bg-white z-[60] transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex justify-between items-center p-6 border-b border-gray-100 h-24">
-            <span className="font-serif font-bold text-xl text-black uppercase">Kumaran</span>
-            <button onClick={() => setIsMobileMenuOpen(false)}>
-                <X size={24} />
-            </button>
+          <span className="font-serif font-bold text-xl text-black uppercase">Kumaran</span>
+          <button onClick={() => setIsMobileMenuOpen(false)}>
+            <X size={24} />
+          </button>
         </div>
         <div className="flex flex-col h-full overflow-y-auto pb-20">
-            {navLinks.map((link) => (
-                <Link 
-                    key={link.name} 
-                    to={link.href} 
-                    className="px-8 py-6 border-b border-gray-50 flex justify-between items-center group"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                >
-                    <span className="font-serif text-2xl text-gray-900">{link.name}</span>
-                    <ChevronRight className="text-gray-300 group-hover:text-black" />
-                </Link>
-            ))}
-            <div className="p-8 mt-auto bg-gray-50">
-                 <Link to="/ownership" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-600 mb-6">
-                    <MapPin size={18} /> Find a Retailer
-                 </Link>
-                 <Link to="#" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-600">
-                    <User size={18} /> Sign In / Register
-                 </Link>
-            </div>
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.href}
+              className="px-8 py-6 border-b border-gray-50 flex justify-between items-center group"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <span className="font-serif text-2xl text-gray-900">{link.name}</span>
+              <ChevronRight className="text-gray-300 group-hover:text-black" />
+            </Link>
+          ))}
+          <div className="p-8 mt-auto bg-gray-50">
+            <Link to="/ownership" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-600 mb-6">
+              <MapPin size={18} /> Find a Retailer
+            </Link>
+            {isAuthenticated ? (
+              <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-600 w-full text-left">
+                <LogOut size={18} /> Logout
+              </button>
+            ) : (
+              <Link to="/login" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-600" onClick={() => setIsMobileMenuOpen(false)}>
+                <User size={18} /> Sign In / Register
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </>
