@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import CarCard from '../components/CarCard';
+import FadeInSection from '../components/FadeInSection';
 import { CarModel } from '../types';
 import { ArrowRight } from 'lucide-react';
 
@@ -95,15 +96,19 @@ const Home: React.FC = () => {
       {/* Categories Row */}
       <section className="bg-[#f6f6f6] py-16">
         <div className="container mx-auto px-6 lg:px-12">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">Browse by Category</h2>
+          <FadeInSection direction="up">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-6">Browse by Category</h2>
+          </FadeInSection>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {categories.map(cat => (
-              <div key={cat.name} className="relative group cursor-pointer overflow-hidden rounded-sm h-32 md:h-40">
-                <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                  <span className="text-white font-serif font-bold text-lg">{cat.name}</span>
+            {categories.map((cat, index) => (
+              <FadeInSection key={cat.name} delay={index * 100} direction="up">
+                <div className="relative group cursor-pointer overflow-hidden rounded-sm h-32 md:h-40">
+                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <span className="text-white font-serif font-bold text-lg">{cat.name}</span>
+                  </div>
                 </div>
-              </div>
+              </FadeInSection>
             ))}
           </div>
         </div>
@@ -112,19 +117,23 @@ const Home: React.FC = () => {
       {/* Featured Listings */}
       <section className="bg-[#f6f6f6] py-16">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="flex justify-between items-end mb-8">
-            <div>
-              <h2 className="font-serif text-3xl font-bold text-gray-900 mb-2">Trending Listings</h2>
-              <p className="text-gray-500 text-sm">The most viewed cars on Kumaran today.</p>
+          <FadeInSection direction="up">
+            <div className="flex justify-between items-end mb-8">
+              <div>
+                <h2 className="font-serif text-3xl font-bold text-gray-900 mb-2">Trending Listings</h2>
+                <p className="text-gray-500 text-sm">The most viewed cars on Kumaran today.</p>
+              </div>
+              <button className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:text-gray-600 transition-colors">
+                View All <ArrowRight size={16} />
+              </button>
             </div>
-            <button className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:text-gray-600 transition-colors">
-              View All <ArrowRight size={16} />
-            </button>
-          </div>
+          </FadeInSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {listings.map(car => (
-              <CarCard key={car.id} car={car} />
+            {listings.map((car, index) => (
+              <FadeInSection key={car.id} delay={index * 50} direction="up">
+                <CarCard car={car} />
+              </FadeInSection>
             ))}
           </div>
         </div>
@@ -133,43 +142,51 @@ const Home: React.FC = () => {
       {/* Editorial / Stories */}
       <section className="bg-white py-20 mt-12 border-t border-gray-200">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4">Kumaran Stories</h2>
-            <p className="text-gray-500 text-lg font-light">
-              Inside the world of luxury, performance, and craftsmanship.
-            </p>
-          </div>
+          <FadeInSection direction="up">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="font-serif text-4xl font-bold text-gray-900 mb-4">Kumaran Stories</h2>
+              <p className="text-gray-500 text-lg font-light">
+                Inside the world of luxury, performance, and craftsmanship.
+              </p>
+            </div>
+          </FadeInSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <article className="group cursor-pointer">
-                <div className="overflow-hidden rounded-sm mb-4">
-                  <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2670&auto=format&fit=crop" className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" alt="Story 1" />
+              <FadeInSection direction="right" delay={200}>
+                <article className="group cursor-pointer">
+                  <div className="overflow-hidden rounded-sm mb-4">
+                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2670&auto=format&fit=crop" className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" alt="Story 1" />
+                  </div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Market Analysis</span>
+                  <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
+                    The Rise of the Hybrid Supercar: Investment Value in 2025
+                  </h3>
+                </article>
+              </FadeInSection>
+              <FadeInSection direction="right" delay={300}>
+                <article className="group cursor-pointer">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Lifestyle</span>
+                  <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
+                    Top 5 Coastal Drives in the Mediterranean
+                  </h3>
+                </article>
+              </FadeInSection>
+            </div>
+            <FadeInSection direction="left" delay={400} className="h-full">
+              <div className="relative h-full min-h-[500px] overflow-hidden rounded-sm group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2670&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Main Story" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Editor's Pick</span>
+                  <h3 className="font-serif text-3xl font-bold text-white mb-2">
+                    Design Legacy: 60 Years of Kumaran
+                  </h3>
+                  <p className="text-white/90 line-clamp-2">
+                    A deep dive into the archives to see how racing DNA shaped the modern hypercar.
+                  </p>
                 </div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Market Analysis</span>
-                <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
-                  The Rise of the Hybrid Supercar: Investment Value in 2025
-                </h3>
-              </article>
-              <article className="group cursor-pointer">
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Lifestyle</span>
-                <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
-                  Top 5 Coastal Drives in the Mediterranean
-                </h3>
-              </article>
-            </div>
-            <div className="relative h-full min-h-[500px] overflow-hidden rounded-sm group cursor-pointer">
-              <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2670&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Main Story" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
-                <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Editor's Pick</span>
-                <h3 className="font-serif text-3xl font-bold text-white mb-2">
-                  Design Legacy: 60 Years of Kumaran
-                </h3>
-                <p className="text-white/90 line-clamp-2">
-                  A deep dive into the archives to see how racing DNA shaped the modern hypercar.
-                </p>
               </div>
-            </div>
+            </FadeInSection>
           </div>
         </div>
       </section>
@@ -177,14 +194,16 @@ const Home: React.FC = () => {
       {/* Dealer/Brand Strip */}
       <section className="py-16 bg-[#f6f6f6]">
         <div className="container mx-auto px-6 text-center">
-          <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">Trusted by World's Best Dealers</h4>
-          <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <span className="text-2xl font-serif font-bold text-gray-800">Miller Motorcars</span>
-            <span className="text-2xl font-serif font-bold text-gray-800">O'Gara Coach</span>
-            <span className="text-2xl font-serif font-bold text-gray-800">H.R. Owen</span>
-            <span className="text-2xl font-serif font-bold text-gray-800">Al Tayer</span>
-            <span className="text-2xl font-serif font-bold text-gray-800">Bingoports</span>
-          </div>
+          <FadeInSection direction="up">
+            <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">Trusted by World's Best Dealers</h4>
+            <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+              <span className="text-2xl font-serif font-bold text-gray-800">Miller Motorcars</span>
+              <span className="text-2xl font-serif font-bold text-gray-800">O'Gara Coach</span>
+              <span className="text-2xl font-serif font-bold text-gray-800">H.R. Owen</span>
+              <span className="text-2xl font-serif font-bold text-gray-800">Al Tayer</span>
+              <span className="text-2xl font-serif font-bold text-gray-800">Bingoports</span>
+            </div>
+          </FadeInSection>
         </div>
       </section>
     </div>
