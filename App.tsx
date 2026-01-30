@@ -8,6 +8,7 @@ import Ownership from './pages/Ownership';
 import Footer from './components/Footer';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const ScrollToTop = () => {
@@ -32,6 +33,7 @@ const App: React.FC = () => {
             <Route path="/models" element={<ProtectedRoute><Models /></ProtectedRoute>} />
             <Route path="/world" element={<ProtectedRoute><World /></ProtectedRoute>} />
             <Route path="/ownership" element={<ProtectedRoute><Ownership /></ProtectedRoute>} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

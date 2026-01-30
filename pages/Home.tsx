@@ -103,7 +103,7 @@ const Home: React.FC = () => {
             {categories.map((cat, index) => (
               <FadeInSection key={cat.name} delay={index * 100} direction="up">
                 <div className="relative group cursor-pointer overflow-hidden rounded-sm h-32 md:h-40">
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={cat.image} alt={cat.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <span className="text-white font-serif font-bold text-lg transform transition-transform duration-300 group-hover:scale-110">{cat.name}</span>
                   </div>
@@ -157,7 +157,7 @@ const Home: React.FC = () => {
               <FadeInSection direction="right" delay={200}>
                 <article className="group cursor-pointer">
                   <div className="overflow-hidden rounded-sm mb-4">
-                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2670&auto=format&fit=crop" className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" alt="Story 1" />
+                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2670&auto=format&fit=crop" loading="lazy" className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" alt="Story 1" />
                   </div>
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Market Analysis</span>
                   <h3 className="font-serif text-2xl font-bold mt-2 text-gray-900 transition-colors">
@@ -180,7 +180,7 @@ const Home: React.FC = () => {
             </div>
             <FadeInSection direction="left" delay={400} className="h-full">
               <div className="relative h-full min-h-[500px] overflow-hidden rounded-sm group cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2670&auto=format&fit=crop" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Main Story" />
+                <img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=2670&auto=format&fit=crop" loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Main Story" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8">
                   <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2">Editor's Pick</span>
                   <h3 className="font-serif text-3xl font-bold text-white mb-2">
@@ -207,6 +207,7 @@ const Home: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1627453308117-91f868c68832?q=80&w=2574&auto=format&fit=crop"
             alt="Background"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
