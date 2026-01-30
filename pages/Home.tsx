@@ -201,6 +201,36 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Aspirational CTA */}
+      <section className="relative py-32 bg-black overflow-hidden">
+        <div className="absolute inset-0 opacity-60">
+          <img
+            src="https://images.unsplash.com/photo-1627453308117-91f868c68832?q=80&w=2574&auto=format&fit=crop"
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        </div>
+        <div className="relative z-10 container mx-auto px-6 text-center">
+          <FadeInSection direction="up">
+            <h2 className="font-serif text-5xl md:text-7xl text-white font-bold mb-8 tracking-tight">
+              Your Legacy Awaits
+            </h2>
+            <p className="text-white/80 text-lg md:text-xl font-light max-w-2xl mx-auto mb-12">
+              Experience the pinnacle of automotive engineering. Configure your Kumaran today.
+            </p>
+            <div className="flex flex-col md:flex-row gap-6 justify-center">
+              <button className="bg-white text-black px-10 py-4 text-sm font-bold uppercase tracking-widest hover:bg-gray-200 transition-colors">
+                Configure Yours
+              </button>
+              <button className="border border-white text-white px-10 py-4 text-sm font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">
+                Locate Retailer
+              </button>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
       {/* Dealer/Brand Strip */}
       <section className="py-16 bg-[#f6f6f6]">
         <div className="container mx-auto px-6 text-center">
