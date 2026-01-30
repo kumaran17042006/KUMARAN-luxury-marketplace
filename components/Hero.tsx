@@ -97,26 +97,26 @@ const Hero: React.FC = () => {
 
         {/* Performance Stats */}
         <div
-          className={`absolute bottom-32 left-0 right-0 flex justify-center gap-12 md:gap-20 transition-all duration-1000 delay-1100 ${isLoaded ? 'opacity-100' : 'opacity-0'
+          className={`absolute bottom-20 md:bottom-32 left-0 right-0 flex justify-center gap-6 md:gap-20 transition-all duration-1000 delay-1100 ${isLoaded ? 'opacity-100' : 'opacity-0'
             }`}
         >
           <div className="text-center">
-            <span className="block text-3xl md:text-4xl font-bold text-white">
+            <span className="block text-2xl md:text-4xl font-bold text-white">
               <AnimatedCounter end={830} duration={2500} />
             </span>
-            <span className="text-xs text-white/60 uppercase tracking-widest">Horsepower</span>
+            <span className="text-[10px] md:text-xs text-white/60 uppercase tracking-widest">Horsepower</span>
           </div>
           <div className="text-center">
-            <span className="block text-3xl md:text-4xl font-bold text-white">
+            <span className="block text-2xl md:text-4xl font-bold text-white">
               <AnimatedCounter end={2.9} duration={2000} decimals={1} suffix="s" />
             </span>
-            <span className="text-xs text-white/60 uppercase tracking-widest">0-100 km/h</span>
+            <span className="text-[10px] md:text-xs text-white/60 uppercase tracking-widest">0-100 km/h</span>
           </div>
           <div className="text-center">
-            <span className="block text-3xl md:text-4xl font-bold text-white">
+            <span className="block text-2xl md:text-4xl font-bold text-white">
               <AnimatedCounter end={340} duration={3000} />
             </span>
-            <span className="text-xs text-white/60 uppercase tracking-widest">Top Speed km/h</span>
+            <span className="text-[10px] md:text-xs text-white/60 uppercase tracking-widest">Top Speed km/h</span>
           </div>
         </div>
 
