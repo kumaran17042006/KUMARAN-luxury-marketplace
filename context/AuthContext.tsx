@@ -63,14 +63,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const signup = async (email: string, password: string, additionalData: object = {}) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // Create user document in Firestore
-        await setDoc(doc(db, 'users', userCredential.user.uid), {
-            email: email,
-            uid: userCredential.user.uid,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-            ...additionalData
-        });
+
+        // Create user document in Firestore (non-blocking)
+        try {
+            await setDoc(doc(db, 'users', userCredential.user.uid), {
+                email: email,
+                uid: userCredential.user.uid,
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp(),
+                ...additionalData
+            });
+        } catch (firestoreError) {
+            // Log error but don't block signup - user is created in Auth
+            console.error('Firestore user document creation failed (non-blocking):', firestoreError);
+        }
+
         return userCredential;
     };
 
