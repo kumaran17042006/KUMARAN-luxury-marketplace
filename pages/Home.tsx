@@ -103,10 +103,11 @@ const Home: React.FC = () => {
             {categories.map((cat, index) => (
               <FadeInSection key={cat.name} delay={index * 100} direction="up">
                 <div className="relative group cursor-pointer overflow-hidden rounded-sm h-32 md:h-40">
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <span className="text-white font-serif font-bold text-lg">{cat.name}</span>
+                    <span className="text-white font-serif font-bold text-lg transform transition-transform duration-300 group-hover:scale-110">{cat.name}</span>
                   </div>
+                  <div className="absolute inset-4 border border-white/0 group-hover:border-white/50 transition-colors duration-500"></div>
                 </div>
               </FadeInSection>
             ))}
@@ -159,16 +160,20 @@ const Home: React.FC = () => {
                     <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2670&auto=format&fit=crop" className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-105" alt="Story 1" />
                   </div>
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Market Analysis</span>
-                  <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
-                    The Rise of the Hybrid Supercar: Investment Value in 2025
+                  <h3 className="font-serif text-2xl font-bold mt-2 text-gray-900 transition-colors">
+                    <span className="bg-gradient-to-r from-black to-black bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+                      The Rise of the Hybrid Supercar: Investment Value in 2025
+                    </span>
                   </h3>
                 </article>
               </FadeInSection>
               <FadeInSection direction="right" delay={300}>
                 <article className="group cursor-pointer">
                   <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Lifestyle</span>
-                  <h3 className="font-serif text-2xl font-bold mt-2 group-hover:text-gray-600 transition-colors">
-                    Top 5 Coastal Drives in the Mediterranean
+                  <h3 className="font-serif text-2xl font-bold mt-2 text-gray-900 transition-colors">
+                    <span className="bg-gradient-to-r from-black to-black bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_1px]">
+                      Top 5 Coastal Drives in the Mediterranean
+                    </span>
                   </h3>
                 </article>
               </FadeInSection>
@@ -181,9 +186,14 @@ const Home: React.FC = () => {
                   <h3 className="font-serif text-3xl font-bold text-white mb-2">
                     Design Legacy: 60 Years of Kumaran
                   </h3>
-                  <p className="text-white/90 line-clamp-2">
+                  <p className="text-white/90 line-clamp-2 mb-6 transition-all duration-300 group-hover:mb-2">
                     A deep dive into the archives to see how racing DNA shaped the modern hypercar.
                   </p>
+                  <div className="overflow-hidden h-0 group-hover:h-10 transition-all duration-300">
+                    <span className="inline-flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white pb-1">
+                      Read Story <ArrowRight size={14} />
+                    </span>
+                  </div>
                 </div>
               </div>
             </FadeInSection>
