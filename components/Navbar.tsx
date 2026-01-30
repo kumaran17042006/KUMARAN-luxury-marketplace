@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Search, MapPin, User, ChevronRight, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check if we're on the home page for transparent navbar
+  const isHomePage = location.pathname === '/';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -32,17 +46,25 @@ const Navbar: React.FC = () => {
     { name: 'Solus GT', image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=600&auto=format&fit=crop' },
   ];
 
+  // Dynamic styling based on scroll position and page
+  const isTransparent = isHomePage && !isScrolled && !activeMenu;
+  const headerBg = isTransparent ? 'bg-transparent' : 'bg-white shadow-sm';
+  const textColor = isTransparent ? 'text-white' : 'text-gray-800';
+  const logoColor = isTransparent ? 'text-white' : 'text-black';
+  const hoverColor = isTransparent ? 'hover:text-white/70' : 'hover:text-gray-500';
+  const borderColor = isTransparent ? 'hover:border-white' : 'hover:border-black';
+
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm font-sans"
+        className={`fixed top-0 left-0 right-0 z-50 font-sans transition-all duration-300 ${headerBg}`}
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="container mx-auto px-6 lg:px-12 h-24 flex items-center justify-between">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 z-50">
-            <span className="font-serif font-bold text-2xl tracking-tighter text-black uppercase">Kumaran</span>
+            <span className={`font-serif font-bold text-2xl tracking-tighter uppercase transition-colors duration-300 ${logoColor}`}>Kumaran</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -55,7 +77,7 @@ const Navbar: React.FC = () => {
               >
                 <Link
                   to={link.href}
-                  className="text-xs font-bold text-gray-800 hover:text-gray-500 transition-colors uppercase tracking-[0.15em] py-8 border-b-2 border-transparent hover:border-black"
+                  className={`text-xs font-bold transition-colors uppercase tracking-[0.15em] py-8 border-b-2 border-transparent ${textColor} ${hoverColor} ${borderColor}`}
                 >
                   {link.name}
                 </Link>
@@ -64,21 +86,21 @@ const Navbar: React.FC = () => {
           </nav>
 
           {/* Right Utilities */}
-          <div className="flex items-center gap-8 text-gray-800">
-            <Link to="/ownership" className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors group">
+          <div className={`flex items-center gap-8 transition-colors duration-300 ${textColor}`}>
+            <Link to="/ownership" className={`hidden lg:flex items-center gap-2 ${hoverColor} transition-colors group`}>
               <MapPin size={18} />
               <span className="text-xs font-bold uppercase tracking-widest group-hover:underline">Find a Retailer</span>
             </Link>
-            <button className="hidden lg:flex hover:text-gray-500 transition-colors">
+            <button className={`hidden lg:flex ${hoverColor} transition-colors`}>
               <Search size={20} />
             </button>
             {isAuthenticated ? (
-              <button onClick={handleLogout} className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors">
+              <button onClick={handleLogout} className={`hidden lg:flex items-center gap-2 ${hoverColor} transition-colors`}>
                 <LogOut size={20} />
                 <span className="text-xs font-bold uppercase tracking-widest">Logout</span>
               </button>
             ) : (
-              <Link to="/login" className="hidden lg:flex items-center gap-2 hover:text-gray-500 transition-colors">
+              <Link to="/login" className={`hidden lg:flex items-center gap-2 ${hoverColor} transition-colors`}>
                 <User size={20} />
               </Link>
             )}
